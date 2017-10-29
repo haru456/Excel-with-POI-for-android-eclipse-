@@ -1,0 +1,322 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>Test</groupId>
+  <artifactId>BookList</artifactId>
+  <version>2.0</version>
+
+<packaging>apk</packaging>
+<prerequisites>
+        <maven>3.6.0</maven>
+</prerequisites>
+  <build>
+    <sourceDirectory>${project.basedir}</sourceDirectory>
+<resources>
+   <resource>
+    <directory>${project.basedir}\res</directory>
+   </resource>
+</resources>
+<plugins>
+
+<plugin>
+   <groupId>com.simpligility.maven.plugins</groupId>
+  <artifactId>android-maven-plugin</artifactId>
+  <version>4.4.2</version>
+<configuration>
+<androidManifestFile>${basedir}\src\main\AndroidManifest.xml</androidManifestFile>
+                <resourceDirectory>${project.basedir}\src\main\res</resourceDirectory>
+                <sourceDirectory>${project.basedir}\src\ex\test</sourceDirectory>
+                <nativeLibrariesDirectory>${project.basedir}\src\main\libs</nativeLibrariesDirectory>
+
+     <sdk>
+<path>${env.ANDROID_HOME}</path>
+      <platform>21</platform>
+     </sdk>
+     <dex>
+      <multi-dex>true</multi-dex>
+   	  <coreLibrary>true</coreLibrary>
+    </dex>
+    </configuration>
+    <extensions>true</extensions>
+</plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-install-plugin</artifactId>
+    <version>2.5.2</version>
+        <executions>
+            <execution>
+                <id>install-external</id>
+                <phase>clean</phase>
+                <configuration>
+                    <file>${project.basedir}\src\main\libs\gcm.jar</file>
+                    <repositoryLayout>default</repositoryLayout>
+                    <groupId>local.lib1</groupId>
+				    <artifactId>gcm</artifactId>
+   					<version>1.0.2</version>
+                    <packaging>jar</packaging>
+                    <generatePom>true</generatePom>
+                </configuration>
+                <goals>
+                    <goal>install-file</goal>
+                </goals>
+            </execution>
+                <execution>
+                <id>install-external2</id>
+                <phase>clean</phase>
+                <configuration>
+                    <file>${project.basedir}\src\main\libs\NCMB.jar</file>
+                    <repositoryLayout>default</repositoryLayout>
+                    <groupId>local.lib2</groupId>
+				    <artifactId>NCMB</artifactId>
+				    <version>2.2.4</version>
+                    <packaging>jar</packaging>
+                    <generatePom>true</generatePom>
+                </configuration>
+                <goals>
+                    <goal>install-file</goal>
+                </goals>
+            </execution>
+            
+             <execution>
+                 <id>install-external3</id>
+                 <phase>clean</phase>
+                 <configuration>
+                     <file>${project.basedir}\src\main\libs\android-5.0.2.jar</file>
+                     <repositoryLayout>default</repositoryLayout>
+				     <groupId>android-21</groupId>
+				     <artifactId>android</artifactId>
+                     <version>5.0.2</version>
+                     <packaging>jar</packaging>
+                     <generatePom>true</generatePom>
+                 </configuration>
+                 <goals>
+                     <goal>install-file</goal>
+                 </goals>
+             </execution>
+        </executions>
+    </plugin>
+     <plugin>
+  <groupId>com.google.appengine</groupId>
+  <artifactId>appengine-maven-plugin</artifactId>
+  <version>1.9.48</version>
+</plugin>
+</plugins>
+  	<pluginManagement>
+  		<plugins>
+  			<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+  			<plugin>
+  				<groupId>org.eclipse.m2e</groupId>
+  				<artifactId>lifecycle-mapping</artifactId>
+  				<version>1.0.0</version>
+  				<configuration>
+  					<lifecycleMappingMetadata>
+  						<pluginExecutions>
+  							<pluginExecution>
+  								<pluginExecutionFilter>
+  									<groupId>
+  										com.simpligility.maven.plugins
+  									</groupId>
+  									<artifactId>
+  										android-maven-plugin
+  									</artifactId>
+  									<versionRange>
+  										[4.4.2,)
+  									</versionRange>
+  									<goals>
+  										<goal>emma</goal>
+  										<goal>generate-sources</goal>
+  										<goal>proguard</goal>
+  									</goals>
+  								</pluginExecutionFilter>
+  								<action>
+  									<ignore></ignore>
+  								</action>
+  							</pluginExecution>
+  						</pluginExecutions>
+  					</lifecycleMappingMetadata>
+  				</configuration>
+  			</plugin>
+  		</plugins>
+  	</pluginManagement>
+  </build>
+  <pluginRepositories>
+    
+<pluginRepository>
+  <id>sonatype-nexus-snapshots</id>
+  <name>Sonatype Nexus Snapshots</name>
+  <url>https://oss.sonatype.org/content/repositories/google-snapshots/</url>
+</pluginRepository>
+
+  </pluginRepositories>
+   <repositories>
+  <repository>
+    <id>repro</id>
+    <name>repro</name>
+    <url>http://cdn.repro.io/android</url>
+  </repository>
+  </repositories>
+<dependencies>
+<dependency>
+    <groupId>android-21</groupId>
+    <artifactId>android</artifactId>
+    <version>5.0.2</version>
+    <scope>provided</scope>  
+    <exclusions>
+    	<exclusion>
+    		<groupId>commons-logging</groupId>
+    		<artifactId>commons-logging</artifactId>
+    	</exclusion>
+    	<exclusion>
+    		<groupId>commons-codec</groupId>
+    		<artifactId>commons-codec</artifactId>
+    	</exclusion>
+    	<exclusion>
+    		<groupId>xpp3</groupId>
+    		<artifactId>xpp3</artifactId>
+    	</exclusion>
+    	<exclusion>
+            <artifactId>stax</artifactId>
+            <groupId>stax</groupId>
+        </exclusion>
+		<exclusion>
+    		<groupId>stax-api</groupId>
+    		<artifactId>stax</artifactId>
+    	</exclusion>
+    	<exclusion>
+    		<groupId>org.khronos</groupId>
+    		<artifactId>opengl-api</artifactId>
+    	</exclusion>
+    	<exclusion>
+    		<groupId>org.apache.httpcomponents</groupId>
+    		<artifactId>httpcore</artifactId>
+    	</exclusion>
+    	<exclusion>
+    		<groupId>org.json</groupId>
+    		<artifactId>json</artifactId>
+    	</exclusion>
+    	<exclusion>
+    		<groupId>org.apache.httpcomponents</groupId>
+    		<artifactId>httpclient</artifactId>
+    	</exclusion>
+    	<exclusion>
+    		<groupId>xerces</groupId>
+    		<artifactId>xmlParserAPIs</artifactId>
+    	</exclusion>
+    	<exclusion>
+    		<groupId>java.awt.font</groupId>
+    		<artifactId>NumericShaper</artifactId>
+    	</exclusion>
+    </exclusions>
+</dependency>
+
+<dependency>
+    <groupId>io.repro</groupId>
+    <artifactId>repro-android-sdk</artifactId>
+    <version>0.10.1</version>
+    <type>aar</type>
+</dependency>  
+<dependency>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-install-plugin</artifactId>
+  <version>2.5.2</version>
+  <type>maven-plugin</type>
+  <exclusions>
+  <exclusion>
+    		<groupId>xpp3</groupId>
+    		<artifactId>xpp3</artifactId>
+    	</exclusion>
+    	<exclusion>
+            <artifactId>stax</artifactId>
+            <groupId>stax</groupId>
+        </exclusion>
+		<exclusion>
+    		<groupId>stax-api</groupId>
+    		<artifactId>stax</artifactId>
+    	</exclusion>
+    	
+  	<exclusion>
+  		<groupId>commons-codec</groupId>
+  		<artifactId>commons-codec</artifactId>
+  	</exclusion>
+  	<exclusion>
+  		<groupId>org.codehaus.plexus</groupId>
+  		<artifactId>plexus-utils</artifactId>
+  	</exclusion>
+  	<exclusion>
+  		<groupId>org.apache.maven</groupId>
+  		<artifactId>maven-profile</artifactId>
+  	</exclusion>
+  	<exclusion>
+  		<groupId>org.apache.maven</groupId>
+  		<artifactId>maven-settings</artifactId>
+  	</exclusion>
+  	<exclusion>
+  		<groupId>org.apache.maven</groupId>
+  		<artifactId>maven-model</artifactId>
+  	</exclusion>
+  	<exclusion>
+  		<groupId>org.apache.maven</groupId>
+  		<artifactId>maven-artifact</artifactId>
+  	</exclusion>
+  	<exclusion>
+  		<groupId>org.apache.maven</groupId>
+  		<artifactId>maven-artifact-manager</artifactId>
+  	</exclusion>
+  	<exclusion>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  	</exclusion>
+  	<exclusion>
+  		<groupId>org.codehaus.plexus</groupId>
+  		<artifactId>plexus-container-default</artifactId>
+  	</exclusion>
+  </exclusions>
+</dependency>
+<dependency>
+    <groupId>com.google.android</groupId>
+    <artifactId>support-v4</artifactId>
+    <version>r7</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>3.9</version>
+</dependency>
+<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.10</version>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-collections4</artifactId>
+    <version>4.1</version>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>3.9</version>
+    <exclusions>
+    	<exclusion>
+    		<groupId>com.github.virtuald</groupId>
+    		<artifactId>curvesapi</artifactId>
+    	</exclusion>
+
+		<exclusion>
+    		<groupId>stax</groupId>
+    		<artifactId>stax-api</artifactId>
+    	</exclusion>
+    	<exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<dependency>
+    <groupId>org.apache.xmlbeans</groupId>
+    <artifactId>xmlbeans</artifactId>
+    <version>2.4.0</version>
+</dependency>
+ </dependencies>
+</project>
